@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
-import { TodoData, TodoDataArray } from "./todo.types";
+import { TodoData, TodoDataArray } from "./types";
 
 export default class Todo {
   static fileName: string = join(__dirname, "./todos.json");

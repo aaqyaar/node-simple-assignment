@@ -1,6 +1,7 @@
 import Todo from "./src/todo";
 import { EventEmitter } from "events";
 import { createInterface } from "readline";
+import { ACTIONS, ACTIONS_VALUE, TodoData } from "./src/types";
 
 const { deleteTask, addTask, displayTasks, updateTask } = Todo;
 
@@ -17,37 +18,40 @@ eventEmitter.on("exit", () => {
 
 _readLine.question(
   "Choose one of these commands (add/delete,update,list,exit) :- ",
-  (data: any) => {
+  (data) => {
     switch (data) {
-      case "add":
-        _readLine.question("Enter task name :- ", (data: any) => {
+      case ACTIONS.ADD:
+        _readLine.question("Enter task name :- ", (data: TodoData["title"]) => {
           addTask(data);
         });
         break;
-      case "update":
+      case ACTIONS.UPDATE:
         _readLine.question(
           "Enter the task id you want to update :- ",
-          (id: any) => {
-            _readLine.question("Enter the new task name :- ", (data: any) => {
-              updateTask(id, data);
-            });
+          (id: TodoData["id"]) => {
+            _readLine.question(
+              "Enter the new task name :- ",
+              (data: TodoData["title"]) => {
+                updateTask(id, data);
+              }
+            );
           }
         );
         break;
-      case "delete":
+      case ACTIONS.DELETE:
         displayTasks();
         _readLine.question(
           "Enter the task id you want to delete :- ",
-          (data: any) => {
-            deleteTask(data);
+          (id: TodoData["id"]) => {
+            deleteTask(id);
           }
         );
         break;
-      case "list":
+      case ACTIONS.LIST:
         displayTasks();
         eventEmitter.emit("exit");
         break;
-      case "exit":
+      case ACTIONS.EXIT:
         eventEmitter.emit("exit");
       default:
         console.error("Invalid command please try again");
