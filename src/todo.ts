@@ -54,8 +54,10 @@ export default class Todo {
         process.exit(1);
       }
       console.log("No item found");
+      process.exit(1);
     } catch (error) {
       console.log("No item found");
+      process.exit(1);
     }
   };
   /**
@@ -65,6 +67,11 @@ export default class Todo {
   static deleteTask = (id: TodoData["id"]) => {
     const data = readFileSync(this.fileName, "utf8");
     const existingData = JSON.parse(data) as TodoDataArray;
+    const findItem = existingData.find((item: TodoData) => item.id == id);
+    if (!findItem) {
+      console.log("No item found");
+      process.exit(1);
+    }
     const removedData = existingData.filter((item: TodoData) => item.id != id);
     writeFileSync(this.fileName, JSON.stringify(removedData, null, 2));
     console.log(`Removed Item with id: ${id}`);
