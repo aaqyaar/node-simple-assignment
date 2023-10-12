@@ -3,17 +3,16 @@ import { EventEmitter } from "events";
 import { createInterface, ReadLine } from "readline";
 import { ACTIONS, TodoData } from "./src/types";
 
-const { deleteTask, addTask, displayTasks, updateTask } = Todo;
-
 class App {
   private _readLine: ReadLine;
   private _eventEmitter: EventEmitter;
+  private _todo: Todo;
 
   constructor() {
     this._readLine = this.initReadLine();
     this._eventEmitter = new EventEmitter();
+    this._todo = new Todo();
     this.init();
-
     this._eventEmitter.on("exit", () => {
       this._readLine.close();
     });
@@ -48,35 +47,35 @@ class App {
         this._readLine.question(
           "Enter task name :- ",
           (data: TodoData["title"]) => {
-            addTask(data);
+            this._todo.addTask(data);
           }
         );
         break;
       case ACTIONS.UPDATE:
-        displayTasks();
+        this._todo.displayTasks();
         this._readLine.question(
           "Enter the task id you want to update :- ",
           (id: TodoData["id"]) => {
             this._readLine.question(
               "Enter the new task name :- ",
               (data: TodoData["title"]) => {
-                updateTask(id, data);
+                this._todo.updateTask(id, data);
               }
             );
           }
         );
         break;
       case ACTIONS.DELETE:
-        displayTasks();
+        this._todo.displayTasks();
         this._readLine.question(
           "Enter the task id you want to delete :- ",
           (id: TodoData["id"]) => {
-            deleteTask(id);
+            this._todo.deleteTask(id);
           }
         );
         break;
       case ACTIONS.LIST:
-        displayTasks();
+        this._todo.displayTasks();
         this._eventEmitter.emit("exit");
         break;
       case ACTIONS.EXIT:

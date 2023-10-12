@@ -3,13 +3,13 @@ import { join } from "path";
 import { TodoData, TodoDataArray } from "./types";
 
 export default class Todo {
-  static fileName: string = join(__dirname, "./todos.json");
+  fileName: string = join(__dirname, "./todos.json");
   /**
    * Add a new task to the list
    * @param data  The task name
    * @returns void
    */
-  static addTask = async (data: TodoData["title"]) => {
+  addTask = async (data: TodoData["title"]) => {
     try {
       const fileContent = readFileSync(this.fileName, "utf8");
       const existingData = JSON.parse(fileContent) as TodoDataArray;
@@ -42,7 +42,7 @@ export default class Todo {
    * @param id The task id
    * @param args The new task name
    */
-  static updateTask = (id: TodoData["id"], args: TodoData["title"]) => {
+  updateTask = (id: TodoData["id"], args: TodoData["title"]) => {
     try {
       const data = readFileSync(this.fileName, "utf8");
       const parsedData = JSON.parse(data) as TodoDataArray;
@@ -64,7 +64,7 @@ export default class Todo {
    * Delete a task
    * @param id The task id
    */
-  static deleteTask = (id: TodoData["id"]) => {
+  deleteTask = (id: TodoData["id"]) => {
     const data = readFileSync(this.fileName, "utf8");
     const existingData = JSON.parse(data) as TodoDataArray;
     const findItem = existingData.find((item: TodoData) => item.id == id);
@@ -81,7 +81,7 @@ export default class Todo {
    * Display all tasks
    * @returns TodoDataArray
    */
-  static displayTasks = (): TodoDataArray => {
+  displayTasks = (): TodoDataArray => {
     const data = JSON.parse(
       readFileSync(this.fileName, "utf8")
     ) as TodoDataArray;
