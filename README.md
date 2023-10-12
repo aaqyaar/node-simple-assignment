@@ -10,7 +10,7 @@ The project is written in TypeScript and uses the File System and Events Module 
 
 ### Prerequisites
 
-List any dependencies or prerequisites that need to be installed before running the project. For example:
+The following software is required to be installed on your system:
 
 - Node.js
 - NPM
@@ -18,7 +18,7 @@ List any dependencies or prerequisites that need to be installed before running 
 
 ### Installation
 
-Provide step-by-step instructions for installing and setting up your project. Include any necessary commands. For example:
+Follow the steps below to install and run the project:
 
 1. Clone the repository:
 
