@@ -53,6 +53,6 @@ Follow the steps below to install and run the project:
 
 Contains the following files:
 
-index.ts: The main entry point of the application.
-todo.ts: Contains functions for managing todo items.
-todos.json: Stores the todo items in JSON format.
+- `index.ts`: The main entry point of the application.
+- `todo.ts`: Contains functions for managing todo items.
+- `todos.json`: Stores the todo items in JSON format.
