@@ -1,7 +1,7 @@
 import Todo from "./src/todo";
 import { EventEmitter } from "events";
 import { createInterface } from "readline";
-import { ACTIONS, ACTIONS_VALUE, TodoData } from "./src/types";
+import { ACTIONS, TodoData } from "./src/types";
 
 const { deleteTask, addTask, displayTasks, updateTask } = Todo;
 

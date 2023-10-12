@@ -11,8 +11,6 @@ enum ACTIONS {
   EXIT = "exit",
 }
 
-type ACTIONS_VALUE = "add" | "delete" | "update" | "list" | "exit";
-
 type TodoDataArray = TodoData[];
 
-export { TodoData, TodoDataArray, ACTIONS, ACTIONS_VALUE };
+export { TodoData, TodoDataArray, ACTIONS };
