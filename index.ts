@@ -1,35 +1,63 @@
 import Todo from "./src/todo";
 import { EventEmitter } from "events";
-import { createInterface } from "readline";
+import { createInterface, ReadLine } from "readline";
 import { ACTIONS, TodoData } from "./src/types";
 
 const { deleteTask, addTask, displayTasks, updateTask } = Todo;
 
-const _readLine = createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+class App {
+  private _readLine: ReadLine;
+  private _eventEmitter: EventEmitter;
 
-const eventEmitter = new EventEmitter();
+  constructor() {
+    this._readLine = this.initReadLine();
+    this._eventEmitter = new EventEmitter();
+    this.init();
 
-eventEmitter.on("exit", () => {
-  process.exit(1);
-});
+    this._eventEmitter.on("exit", () => {
+      this._readLine.close();
+    });
+  }
 
-_readLine.question(
-  "Choose one of these commands (add/delete,update,list,exit) :- ",
-  (data) => {
+  init() {
+    console.log("Welcome to Todo CLI!");
+    console.log("--------------------");
+
+    this.displayCommands();
+  }
+
+  initReadLine(): ReadLine {
+    return createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+  }
+
+  displayCommands() {
+    this._readLine.question(
+      "Choose one of these commands (add/delete,update,list,exit) :- ",
+      (data) => {
+        this.chooseCommand(data);
+      }
+    );
+  }
+
+  chooseCommand(data: string) {
     switch (data) {
       case ACTIONS.ADD:
-        _readLine.question("Enter task name :- ", (data: TodoData["title"]) => {
-          addTask(data);
-        });
+        this._readLine.question(
+          "Enter task name :- ",
+          (data: TodoData["title"]) => {
+            addTask(data);
+          }
+        );
         break;
       case ACTIONS.UPDATE:
-        _readLine.question(
+        displayTasks();
+        this._readLine.question(
           "Enter the task id you want to update :- ",
           (id: TodoData["id"]) => {
-            _readLine.question(
+            this._readLine.question(
               "Enter the new task name :- ",
               (data: TodoData["title"]) => {
                 updateTask(id, data);
@@ -40,7 +68,7 @@ _readLine.question(
         break;
       case ACTIONS.DELETE:
         displayTasks();
-        _readLine.question(
+        this._readLine.question(
           "Enter the task id you want to delete :- ",
           (id: TodoData["id"]) => {
             deleteTask(id);
@@ -49,14 +77,16 @@ _readLine.question(
         break;
       case ACTIONS.LIST:
         displayTasks();
-        eventEmitter.emit("exit");
+        this._eventEmitter.emit("exit");
         break;
       case ACTIONS.EXIT:
-        eventEmitter.emit("exit");
+        this._eventEmitter.emit("exit");
       default:
         console.error("Invalid command please try again");
-        eventEmitter.emit("exit");
+        this._eventEmitter.emit("exit");
         break;
     }
   }
-);
+}
+
+new App();
