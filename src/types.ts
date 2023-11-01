@@ -1,6 +1,7 @@
 interface TodoData {
   id: string;
   title: string;
+  image?: string;
 }
 
 enum ACTIONS {

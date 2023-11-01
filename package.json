@@ -4,11 +4,17 @@
   "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node index.ts"
+    "start:cli": "ts-node index-cli.ts",
+    "start": "ts-node-dev index.ts"
   },
   "devDependencies": {
+    "@types/formidable": "^3.4.4",
     "@types/node": "^20.8.4",
     "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "formidable": "^3.5.1"
   }
 }

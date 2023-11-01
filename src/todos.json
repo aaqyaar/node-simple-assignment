@@ -1,22 +1,12 @@
 [
   {
-    "id": "10521",
-    "title": "Learn Elixir Phoenix LiveView"
+    "id": "77736",
+    "title": "Learn Elixir Phoenix LiveView",
+    "image": "Learn Elixir Phoenix LiveView.jpg"
   },
   {
-    "id": "40350",
-    "title": "Implementing a GraphQL API in Elixir with Absinthe"
-  },
-  {
-    "id": "60795",
-    "title": "Laravel is wonderful and I love it because it's php"
-  },
-  {
-    "id": "31551",
-    "title": "Native Mobile Development is better than Hybrid Mobile Development (for most cases)"
-  },
-  {
-    "id": "19591",
-    "title": "NuxtUI is the best way to get TailwindCSS UI Components in your nuxt.js project"
+    "id": "49099",
+    "title": "Implementing a GraphQL API in Elixir with Absinthe",
+    "image": "Implementing a GraphQL API in Elixir with Absinthe.png"
   }
 ]
