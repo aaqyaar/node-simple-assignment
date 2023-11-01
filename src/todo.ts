@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, readdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import { TodoData, TodoDataArray } from "./types";
 
@@ -9,7 +9,7 @@ export default class Todo {
    * @param data  The task name
    * @returns void
    */
-  addTask = async (data: TodoData["title"]) => {
+  addTask = async (data: TodoData["title"], image: TodoData["image"]) => {
     try {
       const fileContent = readFileSync(this.fileName, "utf8");
       const existingData = JSON.parse(fileContent) as TodoDataArray;
@@ -21,10 +21,11 @@ export default class Todo {
       existingData.push({
         id,
         title: data,
+        image,
       });
       writeFileSync(this.fileName, JSON.stringify(existingData, null, 2));
       console.log(`New Data Saved: ${data}`);
-      process.exit(1);
+      // process.exit(1);
     } catch (error) {
       const newItem = [
         {
@@ -34,7 +35,7 @@ export default class Todo {
       ];
       writeFileSync(this.fileName, JSON.stringify(newItem, null, 2));
       console.log(`New Item Saved: ${data}`);
-      process.exit(1);
+      // process.exit(1);
     }
   };
   /**
@@ -51,31 +52,32 @@ export default class Todo {
         findItem.title = args;
         writeFileSync(this.fileName, JSON.stringify(parsedData, null, 2));
         console.log(`Updated Item with id: ${id}`);
-        process.exit(1);
+        return parsedData;
       }
       console.log("No item found");
-      process.exit(1);
     } catch (error) {
       console.log("No item found");
-      process.exit(1);
     }
   };
   /**
    * Delete a task
    * @param id The task id
    */
-  deleteTask = (id: TodoData["id"]) => {
+  deleteTask = async (id: TodoData["id"]): Promise<any> => {
+    console.log(id);
     const data = readFileSync(this.fileName, "utf8");
     const existingData = JSON.parse(data) as TodoDataArray;
     const findItem = existingData.find((item: TodoData) => item.id == id);
+
     if (!findItem) {
       console.log("No item found");
-      process.exit(1);
     }
-    const removedData = existingData.filter((item: TodoData) => item.id != id);
+    const removedData = await existingData.filter(
+      (item: TodoData) => item.id != id
+    );
     writeFileSync(this.fileName, JSON.stringify(removedData, null, 2));
     console.log(`Removed Item with id: ${id}`);
-    process.exit(1);
+    return removedData;
   };
   /**
    * Display all tasks
@@ -85,7 +87,7 @@ export default class Todo {
     const data = JSON.parse(
       readFileSync(this.fileName, "utf8")
     ) as TodoDataArray;
-    console.log(data);
+
     return data;
   };
 }
